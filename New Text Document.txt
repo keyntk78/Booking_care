@@ -8,6 +8,11 @@ npm install --save-dev sequelize-cli@6.2.0
 npm install --save mysql2@2.2.5
 npm install --save sequelize@6.6.2
 
+npm install --save sequelize@6.6.2
+npm i --save bcrypt@5.0.1 lỗi
+npm i --save bcryptjs@2.4.3
+
+
 
 👉 2. Thêm file .sequelizerc tại thư mục root
 Nội dung file .sequelizerc
