@@ -6,6 +6,7 @@ import * as actions from "../../store/actions";
 
 import "./Login.scss";
 // import { FormattedMessage } from "react-intl";
+import { handleLoginAPI } from "../../services/userServiece";
 
 class Login extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -29,9 +30,10 @@ class Login extends Component {
     });
   };
 
-  hanldeLogin = () => {
+  hanldeLogin = async () => {
     console.log(this.state.username);
     console.log(this.state.password);
+    await handleLoginAPI(this.state.username, this.state.password);
   };
 
   render() {

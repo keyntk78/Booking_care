@@ -11,7 +11,7 @@ npm install --save sequelize@6.6.2
 npm install --save sequelize@6.6.2
 npm i --save bcrypt@5.0.1 lỗi
 npm i --save bcryptjs@2.4.3
-
+npm i --save cors@2.8.5
 
 
 👉 2. Thêm file .sequelizerc tại thư mục root
