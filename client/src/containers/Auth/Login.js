@@ -9,12 +9,12 @@ import "./Login.scss";
 import { handleLoginAPI } from "../../services/userServiece";
 
 class Login extends Component {
-  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password: "",
+      errMessage: "",
     };
   }
 
@@ -31,9 +31,33 @@ class Login extends Component {
   };
 
   hanldeLogin = async () => {
-    console.log(this.state.username);
-    console.log(this.state.password);
-    await handleLoginAPI(this.state.username, this.state.password);
+    this.setState({
+      errMessage: "",
+    });
+    try {
+      let data = await handleLoginAPI(this.state.username, this.state.password);
+      if (data && data.errCode !== 0) {
+        this.setState({
+          errMessage: data.message,
+        });
+      }
+
+      if (data && data.errCode === 0) {
+        //todo
+        console.log("Lofin successfully logged in");
+        // eslint-disable-next-line no-undef
+        this.props.userLoginSuccess(data.user);
+      }
+    } catch (e) {
+      if (e.response) {
+        if (e.response.data) {
+          this.setState({
+            errMessage: e.response.data.message,
+          });
+        }
+        console.log(e.response);
+      }
+    }
   };
 
   render() {
@@ -61,6 +85,9 @@ class Login extends Component {
                 value={this.state.password}
                 onChange={(event) => this.handleOnchangePassword(event)}
               />
+            </div>
+            <div className="col-12" style={{ color: "red" }}>
+              {this.state.errMessage}
             </div>
             <div className="col-12">
               <button
@@ -99,9 +126,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     navigate: (path) => dispatch(push(path)),
-    adminLoginSuccess: (adminInfo) =>
-      dispatch(actions.adminLoginSuccess(adminInfo)),
-    adminLoginFail: () => dispatch(actions.adminLoginFail()),
+
+    // userLoginFail: () => dispatch(actions.userLoginFail()),
+    userLoginSuccess: (userInfo) =>
+      dispatch(actions.userLoginSuccess(userInfo)),
   };
 };
 
